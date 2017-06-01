@@ -1,0 +1,470 @@
+aspx code:
+
+    <asp:DataGrid ID="dgFFVP" runat="server" AccessKey="d" AllowPaging="true" AllowSorting="True"
+	BackColor="White" BorderColor="#CCCCCC" BorderStyle="Groove" BorderWidth="1px"
+	Caption="" CaptionAlign="Top" CellPadding="3" Height="100px" Width="100%"
+	ToolTip="Fresh Fruit and Vegetables Administration Data Grid" UseAccessibleHeader="True" 
+	AutoGenerateColumns="false" ShowHeader="true" ShowFooter="true" OnItemCommand="dgFFVP_ItemCommand" >
+	<FooterStyle BackColor="White" ForeColor="#000066" />
+	<SelectedItemStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+	<PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" Mode="NumericPages" />
+	<ItemStyle ForeColor="#000066" />
+	<HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+	<Columns>
+	    <%--Columns for data.--%>
+	    <%--DataFormatString="{0:$#,###.##}" to format currency.--%> 
+
+	    <asp:BoundColumn DataField="FiscalYear" HeaderText="Fiscal Year" Visible="false" />
+	    <asp:BoundColumn DataField="FundAmount" HeaderText="Fund Amount" Visible="false"  />
+	    <asp:BoundColumn DataField="DistrictCount" DataFormatString="{0:#,###.##}" HeaderText="Approved<br/>Districts" Visible="false"  />
+	    <asp:BoundColumn DataField="TotalDistrictEnrollment" DataFormatString="{0:#,###.##}" HeaderText="Enrollment" Visible="false"  />
+	    <asp:BoundColumn DataField="ClaimedToDate" HeaderText="Amount Claimed<br/>To Date" Visible="false"  />
+	    <asp:BoundColumn DataField="PerStudent" HeaderText="Amount<br/>Per<br/>Student" Visible="false"  />
+
+	    <%--Key fields--%>
+	    <asp:BoundColumn DataField="FYID" HeaderText="FYID" Visible="false" />
+	    <asp:BoundColumn DataField="FFVPAdminID" HeaderText="FFVPAdminID" Visible="false" />
+	    <asp:BoundColumn DataField="FFVPStudentRateId" HeaderText="FFVPStudentRateId" Visible="false" />
+
+	    <%--Fiscal Year - FiscalYear--%>
+	    <asp:TemplateColumn>
+		<HeaderTemplate>
+		    <asp:Label ID="lblHeaderFiscalYear" runat="server" Text="Fiscal Year" />
+		</HeaderTemplate>
+		<ItemTemplate>
+		    <asp:Label ID="lblFiscalYear" runat="server" ></asp:Label>
+		</ItemTemplate>
+		<EditItemTemplate>
+		    <asp:TextBox ID="etFiscalYear" runat="server" ></asp:TextBox>
+		</EditItemTemplate>
+		<FooterTemplate>
+		    <asp:DropDownList ID="ftFiscalYear" runat="server"></asp:DropDownList>
+		</FooterTemplate>
+	    </asp:TemplateColumn>
+
+	    <%--Fund Amount - FundAmount--%>
+	    <asp:TemplateColumn>
+		<HeaderTemplate>
+		    <asp:Label ID="lblHeaderFundAmount" runat="server" Text="Fund Amount" />
+		</HeaderTemplate>
+		<ItemTemplate>
+		    <asp:Label ID="lblFundAmount" runat="server" ></asp:Label>
+		</ItemTemplate>
+		<EditItemTemplate>
+		    <asp:TextBox ID="etFundAmount" runat="server" ></asp:TextBox>
+		    <asp:RegularExpressionValidator ID="revetFundAmount" runat="server" ControlToValidate="etFundAmount"
+			ErrorMessage="Please enter a valid [Fund Amount]." Text= "*" ValidationExpression="^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$" ValidationGroup="etCheck"></asp:RegularExpressionValidator>
+		</EditItemTemplate>
+		<FooterTemplate>
+		    <asp:TextBox ID="ftFundAmount" runat="server" ></asp:TextBox>
+		    <asp:RegularExpressionValidator ID="revftFundAmount" runat="server" ControlToValidate="ftFundAmount"
+			ErrorMessage="Please enter a valid [Fund Amount]." Text= "*" ValidationExpression="^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$" ValidationGroup="ftCheck"></asp:RegularExpressionValidator>
+		</FooterTemplate>
+	    </asp:TemplateColumn>
+
+	    <%--Approved Districts - DistrictCount--%>
+	    <asp:TemplateColumn>
+		<HeaderTemplate>
+		    <asp:Label ID="lblHeaderDistrictCount" runat="server" Text="Approved<br/>Districts" />
+		</HeaderTemplate>
+		<ItemTemplate>
+		    <asp:Label ID="lblDistrictCount" runat="server" ></asp:Label>
+		</ItemTemplate>
+		<EditItemTemplate>
+		    <asp:TextBox ID="etDistrictCount" runat="server" ></asp:TextBox>
+		    <asp:RegularExpressionValidator ID="revetDistrictCount" runat="server" ControlToValidate="etDistrictCount"
+			ErrorMessage="Please enter a valid [Approved Districts] count." Text= "*" ValidationExpression="^\d+$" ValidationGroup="etCheck"></asp:RegularExpressionValidator>
+		</EditItemTemplate>
+		<FooterTemplate>
+		    <asp:TextBox ID="ftDistrictCount" runat="server" ></asp:TextBox>
+		    <asp:RegularExpressionValidator ID="revftDistrictCount" runat="server" ControlToValidate="ftDistrictCount"
+			ErrorMessage="Please enter a valid [Approved Districts] count." Text= "*" ValidationExpression="^\d+$" ValidationGroup="ftCheck"></asp:RegularExpressionValidator>
+		</FooterTemplate>
+	    </asp:TemplateColumn>
+
+	    <%--Enrollment - TotalDistrictEnrollment--%>
+	    <asp:TemplateColumn>
+		<HeaderTemplate>
+		    <asp:Label ID="lblHeaderTotalDistrictEnrollment" runat="server" Text="Enrollment" />
+		</HeaderTemplate>
+		<ItemTemplate>
+		    <asp:Label ID="lblTotalDistrictEnrollment" runat="server" ></asp:Label>
+		</ItemTemplate>
+		<EditItemTemplate>
+		    <asp:TextBox ID="etTotalDistrictEnrollment" runat="server" ></asp:TextBox>
+		    <asp:RegularExpressionValidator ID="revetTotalDistrictEnrollment" runat="server" ControlToValidate="etTotalDistrictEnrollment"
+			ErrorMessage="Please enter a valid [District Enrollment] count." Text= "*" ValidationExpression="^\d+$" ValidationGroup="etCheck"></asp:RegularExpressionValidator>
+		</EditItemTemplate>
+		<FooterTemplate>
+		    <asp:TextBox ID="ftTotalDistrictEnrollment" runat="server" ></asp:TextBox>
+		    <asp:RegularExpressionValidator ID="revftTotalDistrictEnrollment" runat="server" ControlToValidate="ftTotalDistrictEnrollment"
+			ErrorMessage="Please enter a valid [District Enrollment] count." Text= "*" ValidationExpression="^\d+$" ValidationGroup="ftCheck"></asp:RegularExpressionValidator>
+		</FooterTemplate>
+	    </asp:TemplateColumn>
+
+	    <%--Amount Claimed To-Date - ClaimedToDate--%>
+	    <asp:TemplateColumn>
+		<HeaderTemplate>
+		    <asp:Label ID="lblHeaderClaimedToDate" runat="server" Text="Amount Claimed<br/>To Date" />
+		</HeaderTemplate>
+		<ItemTemplate>
+		    <asp:Label ID="lblClaimedToDate" runat="server" ></asp:Label>
+		</ItemTemplate>
+		<EditItemTemplate>
+		    <asp:TextBox ID="etClaimedToDate" runat="server" ></asp:TextBox>
+		</EditItemTemplate>
+		<FooterTemplate>
+		    <asp:TextBox ID="ftClaimedToDate" runat="server" ></asp:TextBox>
+		</FooterTemplate>
+	    </asp:TemplateColumn>
+
+	    <%--Amount Per Student - PerStudent--%>
+	    <asp:TemplateColumn>
+		<HeaderTemplate>
+		    <asp:Label ID="lblHeaderPerStudent" runat="server" Text="Amount<br/>Per<br/>Student" />
+		</HeaderTemplate>
+		<ItemTemplate>
+		    <asp:Label ID="lblPerStudent" runat="server" ></asp:Label>
+		</ItemTemplate>
+		<EditItemTemplate>
+		    <asp:TextBox ID="etPerStudent" runat="server" ></asp:TextBox>
+		    <asp:RegularExpressionValidator ID="revetPerStudent" runat="server" ControlToValidate="etPerStudent"
+			ErrorMessage="Please enter a valid [Amount per student]." Text= "*" ValidationExpression="^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$" ValidationGroup="etCheck"></asp:RegularExpressionValidator>
+		</EditItemTemplate>
+		<FooterTemplate>
+		    <asp:TextBox ID="ftPerStudent" runat="server" ></asp:TextBox>
+		    <asp:RegularExpressionValidator ID="revftPerStudent" runat="server" ControlToValidate="ftPerStudent"
+			ErrorMessage="Please enter a valid [Amount per student]." Text= "*" ValidationExpression="^-?(?:0|[1-9]\d{0,2}(?:,?\d{3})*)(?:\.\d+)?$" ValidationGroup="ftCheck"></asp:RegularExpressionValidator>
+		</FooterTemplate>
+	    </asp:TemplateColumn>
+
+	    <asp:TemplateColumn>
+		<ItemTemplate>
+		    <asp:Button ID="btnEdit" CommandName="Edit" Text="Edit" Runat="server" />
+		</ItemTemplate>
+		<EditItemTemplate>
+		    <asp:Button ID="btnCancel" CommandName="Cancel" Text="Cancel" Runat="server" />
+		    <asp:Button CommandName="Update" Text="Save" CausesValidation="true" ValidationGroup="etCheck" Runat="server" />
+		</EditItemTemplate>
+		<FooterTemplate>
+		    <asp:Button ID="btnAdd" CommandName="Insert" Text="Save" CausesValidation="true" ValidationGroup="ftCheck" Runat="server" />
+		</FooterTemplate>
+	    </asp:TemplateColumn>
+
+	</Columns>
+    </asp:DataGrid>
+
+code behind:
+
+Protected Sub dgFFVP_ItemDataBound(sender As Object, e As DataGridItemEventArgs) Handles dgFFVP.ItemDataBound
+
+        Dim ddl As DropDownList
+        Dim val As String
+
+        Dim otxtFiscalYear As TextBox
+        Dim otxtFundAmount As TextBox
+        Dim otxtDistrictCount As TextBox
+        Dim otxtTotalDistrictEnrollment As TextBox
+        Dim otxtClaimedToDate As TextBox
+        Dim otxtPerStudent As TextBox
+
+        Dim olblFiscalYear As Label
+        Dim olblFundAmount As Label
+        Dim olblDistrictCount As Label
+        Dim olblTotalDistrictEnrollment As Label
+        Dim olblClaimedToDate As Label
+        Dim olblPerStudent As Label
+
+        If e.Item.ItemType.ToString().EqualsAny((ListItemType.AlternatingItem.ToString() & "," & ListItemType.Item.ToString()).Split(",")) Then
+
+            olblFiscalYear = e.Item.FindControl("lblFiscalYear")
+            With olblFiscalYear
+                .Text = e.Item.Cells(FFVPDGColumns.FiscalYear).Text
+            End With
+
+            olblFundAmount = e.Item.FindControl("lblFundAmount")
+            With olblFundAmount
+                .Text = FormatCurrency(e.Item.Cells(FFVPDGColumns.FundAmount).Text)
+                .Style("float") = "right"
+            End With
+
+            olblDistrictCount = e.Item.FindControl("lblDistrictCount")
+            With olblDistrictCount
+                .Text = FormatNumber(e.Item.Cells(FFVPDGColumns.DistrictCount).Text, 0)
+                .Style("float") = "right"
+            End With
+
+            olblTotalDistrictEnrollment = e.Item.FindControl("lblTotalDistrictEnrollment")
+            With olblTotalDistrictEnrollment
+                .Text = FormatNumber(e.Item.Cells(FFVPDGColumns.TotalDistrictEnrollment).Text, 0)
+                .Style("float") = "right"
+            End With
+
+            olblClaimedToDate = e.Item.FindControl("lblClaimedToDate")
+            With olblClaimedToDate
+                .Text = FormatCurrency(e.Item.Cells(FFVPDGColumns.ClaimedToDate).Text)
+                .Style("float") = "right"
+            End With
+
+            olblPerStudent = e.Item.FindControl("lblPerStudent")
+            With olblPerStudent
+                .Text = FormatCurrency(e.Item.Cells(FFVPDGColumns.PerStudent).Text)
+                .Style("float") = "right"
+            End With
+
+            If (dgFFVP.EditItemIndex <> -1 AndAlso e.Item.ItemIndex <> dgFFVP.EditItemIndex) Then
+                'Hide Edit button
+                Dim btnEdit As System.Web.UI.WebControls.Button
+                btnEdit = e.Item.FindControl("btnEdit")
+                btnEdit.Style.Item("display") = "none"
+
+                'Override and hide <Edit> option, If the user is Not SNP Staff
+                If Current.User.Type <> UserType.SnpStaff Then
+                    btnEdit.Style.Item("display") = "none"
+                End If
+
+            End If
+
+        ElseIf e.Item.ItemType = ListItemType.EditItem Then
+
+            dgFFVP.ShowFooter = False
+
+            'Store these key values as they are not avialble at "update"
+            Session("KeyValPair") = ""
+            Session("KeyValPair") &= "FYID=" & CType(e.Item.Cells(FFVPDGColumns.FYID).Controls(0), TextBox).Text
+            Session("KeyValPair") &= "|FFVPAdminID=" & CType(e.Item.Cells(FFVPDGColumns.FFVPAdminID).Controls(0), TextBox).Text
+            Session("KeyValPair") &= "|FFVPStudentRateId=" & CType(e.Item.Cells(FFVPDGColumns.FFVPStudentRateId).Controls(0), TextBox).Text
+
+            'Fiscal Year
+            otxtFiscalYear = e.Item.Cells(FFVPDGColumns.FiscalYear).Controls(0)
+            val = otxtFiscalYear.Text
+            otxtFiscalYear = e.Item.FindControl("etFiscalYear")
+            otxtFiscalYear.Text = val
+            otxtFiscalYear.Enabled = False
+
+            'Fund Amount
+            otxtFundAmount = e.Item.Cells(FFVPDGColumns.FundAmount).Controls(0)
+            val = otxtFundAmount.Text
+            otxtFundAmount = e.Item.FindControl("etFundAmount")
+            With otxtFundAmount
+                .Text = CleanCurrency(val)
+                .Style("text-align") = "right"
+                .Width = "100"
+            End With
+
+            'District Count
+            otxtDistrictCount = e.Item.Cells(FFVPDGColumns.DistrictCount).Controls(0)
+            val = otxtDistrictCount.Text
+            otxtDistrictCount = e.Item.FindControl("etDistrictCount")
+            With otxtDistrictCount
+                .Text = CleanCurrency(val)
+                .Style("text-align") = "right"
+                .Width = "50"
+            End With
+
+            'Total District Enrollment
+            otxtTotalDistrictEnrollment = e.Item.Cells(FFVPDGColumns.TotalDistrictEnrollment).Controls(0)
+            val = otxtTotalDistrictEnrollment.Text
+            otxtTotalDistrictEnrollment = e.Item.FindControl("etTotalDistrictEnrollment")
+            With otxtTotalDistrictEnrollment
+                .Text = CleanCurrency(val)
+                .Style("text-align") = "right"
+                .Width = "50"
+            End With
+
+            'Claimed To-Date
+            otxtClaimedToDate = e.Item.Cells(FFVPDGColumns.ClaimedToDate).Controls(0)
+            val = otxtClaimedToDate.Text
+            otxtClaimedToDate = e.Item.FindControl("etClaimedToDate")
+            With otxtClaimedToDate
+                .Text = CleanCurrency(val)
+                .Style("text-align") = "right"
+                .Width = "100"
+                'This value comes from vwFruitVegClaim
+                .Style("display") = "none"
+            End With
+
+            'Per Student
+            otxtPerStudent = e.Item.Cells(FFVPDGColumns.PerStudent).Controls(0)
+            val = otxtPerStudent.Text
+            otxtPerStudent = e.Item.FindControl("etPerStudent")
+            With otxtPerStudent
+                .Text = CleanCurrency(val)
+                .Style("text-align") = "right"
+                .Width = "50"
+            End With
+
+        ElseIf e.Item.ItemType = ListItemType.Footer Then
+
+            If Current.User.Type = UserType.SnpStaff Then
+
+                ddl = e.Item.FindControl("ftFiscalYear")
+                Dim ds As DataSet = FillFFVPGrid("NewRows")
+                If Not ds Is Nothing AndAlso ds.Tables.Count > 0 AndAlso ds.Tables(0).Rows.Count > 0 Then
+                    Dim dr() As DataRow = ds.Tables(0).Select("FFVPAdminId = -1 And FFVPStudentRateId = -1")
+                    For Each row As DataRow In dr
+                        val = row.Item("FYID").ToString() & ";" & row.Item("FFVPAdminID").ToString() & ";" & row.Item("FFVPStudentRateId").ToString()
+                        ddl.Items.Add(New ListItem(row.Item("FiscalYear").ToString(), val.ToString()))
+                    Next
+
+                    otxtFundAmount = e.Item.FindControl("ftFundAmount")
+                    With otxtFundAmount
+                        .Text = ""
+                        .Style("TextAlign") = "right"
+                        .Width = "100"
+                    End With
+
+                    otxtDistrictCount = e.Item.FindControl("ftDistrictCount")
+                    With otxtDistrictCount
+                        .Text = ""
+                        .Style("text-align") = "right"
+                        .Width = "50"
+                    End With
+
+                    otxtTotalDistrictEnrollment = e.Item.FindControl("ftTotalDistrictEnrollment")
+                    With otxtTotalDistrictEnrollment
+                        .Text = ""
+                        .Style("text-align") = "right"
+                        .Width = "50"
+                    End With
+
+                    otxtClaimedToDate = e.Item.FindControl("ftClaimedToDate")
+                    With otxtClaimedToDate
+                        .Text = ""
+                        .Style("text-align") = "right"
+                        .Width = "100"
+                        'This value comes from vwFruitVegClaim
+                        .Style("display") = "none"
+                    End With
+
+                    otxtPerStudent = e.Item.FindControl("ftPerStudent")
+                    With otxtPerStudent
+                        .Text = ""
+                        .Style("text-align") = "right"
+                        .Width = "50"
+                    End With
+
+                Else
+
+                    'Hide New Item add row as there are no FY available. Add row in table FFVPFiscalYear.
+                    dgFFVP.ShowFooter = False
+
+                End If
+
+            Else
+
+                'Hide New Item add row, if the user is Not SNP Staff.
+                dgFFVP.ShowFooter = False
+
+            End If
+
+        End If
+
+    End Sub
+    
+    Protected Sub dgFFVP_ItemCommand(source As Object, e As DataGridCommandEventArgs)
+    
+            Dim ddl As DropDownList
+            Dim val As String
+            Dim ddlval() As String
+            Dim spVal As String = ""
+    
+            Dim KeyValPair As New List(Of clsCommon.Param)
+    
+            Select Case e.CommandName.ToString().ToUpper()
+                Case "INSERT"
+    
+                    If Page.IsValid Then
+                        dgFFVP.ShowFooter = True
+    
+                        ddl = e.Item.FindControl("ftFiscalYear")
+                        ddlval = ddl.SelectedValue.Split(";")
+    
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "FYId", .ParamValue = ddlval(0).ToString()})
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "FFVPAdminId", .ParamValue = ddlval(1).ToString()})
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "FFVPStudentRateId", .ParamValue = ddlval(2).ToString()})
+    
+                        val = CType(e.Item.FindControl("ftFundAmount"), TextBox).Text
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "FundAmount", .ParamValue = val.ToString()})
+    
+                        val = CType(e.Item.FindControl("ftDistrictCount"), TextBox).Text
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "DistrictCount", .ParamValue = val.ToString()})
+    
+                        val = CType(e.Item.FindControl("ftTotalDistrictEnrollment"), TextBox).Text
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "TotalDistrictEnrollment", .ParamValue = val.ToString()})
+    
+                        val = CType(e.Item.FindControl("ftPerStudent"), TextBox).Text
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "PerStudent", .ParamValue = val.ToString()})
+    
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "WhoUpdated", .ParamValue = Session("UserID").ToString()})
+    
+                        Dim clsComm As New clsCommon
+                        spVal = clsComm.KeyValPairToString(KeyValPair)
+    
+                        clsComm.ExecuteSP("spClaimFFVAdmin_Save", spVal, False, True)
+    
+                        'Always bind the data so the datagrid can be displayed.
+                        FillFFVPGrid(bRefresh:=True)
+                    End If
+    
+                Case "EDIT"
+    
+                    dgFFVP.EditItemIndex = e.Item.ItemIndex
+                    dgFFVP.ShowFooter = False
+    
+                    'Always bind the data so the datagrid can be displayed.
+                    FillFFVPGrid()
+    
+                Case "CANCEL"
+    
+                    'All we do in the cancel method is to assign '-1' to the datagrid editItemIndex
+                    'Once the edititemindex is set to '-1' 
+                    'the datagrid returns back to its original condition
+                    dgFFVP.EditItemIndex = -1
+                    dgFFVP.ShowFooter = True
+    
+                    'Always bind the data so the datagrid can be displayed.
+                    FillFFVPGrid()
+    
+                Case "UPDATE"
+    
+                    If Page.IsValid Then
+                        dgFFVP.EditItemIndex = -1
+                        dgFFVP.ShowFooter = True
+    
+                        val = CType(e.Item.FindControl("etFundAmount"), TextBox).Text
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "FundAmount", .ParamValue = val.ToString()})
+    
+                        val = CType(e.Item.FindControl("etDistrictCount"), TextBox).Text
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "DistrictCount", .ParamValue = val.ToString()})
+    
+                        val = CType(e.Item.FindControl("etTotalDistrictEnrollment"), TextBox).Text
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "TotalDistrictEnrollment", .ParamValue = val.ToString()})
+    
+                        val = CType(e.Item.FindControl("etPerStudent"), TextBox).Text
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "PerStudent", .ParamValue = val.ToString()})
+    
+                        KeyValPair.Add(New clsCommon.Param() With {.ParamName = "WhoUpdated", .ParamValue = Session("UserID").ToString()})
+    
+                        Dim clsComm As New clsCommon
+                        spVal = clsComm.KeyValPairToString(KeyValPair)
+    
+                        'Concatinate the stored key values from edit
+                        spVal = Session("KeyValPair") & "|" & spVal
+    
+                        clsComm.ExecuteSP("spClaimFFVAdmin_Save", spVal, False, True)
+    
+                        'Always bind the data so the datagrid can be displayed.
+                        FillFFVPGrid(bRefresh:=True)
+                    End If
+    
+            End Select
+    
+        End Sub
+    
+        Private Sub dgFFVP_PageIndexChanged(source As Object, e As DataGridPageChangedEventArgs) Handles dgFFVP.PageIndexChanged
+    
+            dgFFVP.CurrentPageIndex = e.NewPageIndex
+            FillFFVPGrid()
+    
+    End Sub
